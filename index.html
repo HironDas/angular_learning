@@ -14,5 +14,13 @@
 </head>
 <body>
 
+<script type="text/javascript" src="resources/systemjs.config.js"></script>
+<script type="text/javascript">
+	System.import('app.js')
+		.then(null, console.error.bind(console));
+</script>
+
+<hello-world></hello-world>
+
 </body>
 </html>
