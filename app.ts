@@ -22,6 +22,18 @@ class HelloWorld {
 	}
 }*/
 
+class Article {
+	title: string;
+	link: string;
+	votes: number;
+	
+	constructor(title: string, link: string, votes?: number) {
+
+		this.title = title;
+		this.link = link;
+		this.votes = votes || 0;
+	}
+}
 
 
 @Component({
@@ -33,7 +45,7 @@ class HelloWorld {
 	<div class = "four wide column center aligned votes">
 		<div class = "ui statistic">
 			<div class = "value">
-				{{value}}
+				{{votes}}
 			</div>
 			<div class = "label">
 				Points
@@ -47,6 +59,12 @@ class HelloWorld {
 		<ul class = "ui big horizontal list voters">
 			<li class = "item">
 				<a href (click) = "voteUp()">
+					<i class = "arrow up icon"></i>
+					upvote
+				</a>
+			</li>
+			<li class = "item">
+				<a href (click) = "voteDown()">
 					<i class = "arrow down icon"></i>
 					downvote
 				</a>
@@ -57,22 +75,20 @@ class HelloWorld {
 })
 
  class ArticleComponent  {
-	votes: number;
-	title: string;
-	link : string;
+	article: Article;
 
 	constructor() {
-		this.title = "Angular 2";
-		this.link = "http://angular.io";
-		this.votes = 10;
+		this.article = new Article("Angular 2", "http://angular.io", 10);
 	}
 
 	voteUp(){
-		this.votes += 1;
+		this.article.votes += 1;
+		return false;
 	}
 
 	voteDown() {
-		this.votes -= 1;
+		this.article.votes -= 1;
+		return false;
 	}
 }
 
@@ -97,6 +113,10 @@ class HelloWorld {
 				Submit link
 			</button>
 		</form>
+		<div class = "ui grid posts">
+			<reddit-article>
+			</reddit-article>
+		</div>
 	`
 })
 
