@@ -33,11 +33,20 @@ class Article {
 		this.link = link;
 		this.votes = votes || 0;
 	}
+
+	voteUp(): void{
+		this.votes +=1;
+	}
+
+	voteDown(): void{
+		this.votes -= 1;
+	}
 }
 
 
 @Component({
 	selector: 'reddit-article',
+	inputs: ['article'],
 	host: {
 		class: "row"
 	},
@@ -45,7 +54,7 @@ class Article {
 	<div class = "four wide column center aligned votes">
 		<div class = "ui statistic">
 			<div class = "value">
-				{{votes}}
+				{{article.votes}}
 			</div>
 			<div class = "label">
 				Points
@@ -53,8 +62,8 @@ class Article {
 		</div>
 	</div>
 	<div class = "twelve wide column">
-		<a class = "ui large header" href = "{{ link }}">
-			{{title}}
+		<a class = "ui large header" href = "{{ article.link }}">
+			{{article.title}}
 		</a>
 		<ul class = "ui big horizontal list voters">
 			<li class = "item">
@@ -81,13 +90,13 @@ class Article {
 		this.article = new Article("Angular 2", "http://angular.io", 10);
 	}
 
-	voteUp(){
-		this.article.votes += 1;
+	voteUp(): boolean{
+		this.article.voteUp();
 		return false;
 	}
 
-	voteDown() {
-		this.article.votes -= 1;
+	voteDown(): boolean{
+		this.article.voteDown();
 		return false;
 	}
 }
@@ -114,16 +123,24 @@ class Article {
 			</button>
 		</form>
 		<div class = "ui grid posts">
-			<reddit-article>
+			<reddit-article 
+			*ngFor="let article of articles"
+			[article] = "article">
 			</reddit-article>
 		</div>
 	`
 })
 
 class RedditApp {
+
+	articles: Article[];
 	
 	constructor() {
-					
+		this.articles = [
+			new Article('Angular 2', 'http://angular.io', 3),
+			new Article('FullStack', 'http://fullstack.io', 10),
+			new Article('Angular Homepage', 'http://angular.io', 5),
+		]
 	}
 
 	addArticle(title: HTMLInputElement, link: HTMLInputElement): void {
