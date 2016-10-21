@@ -34,6 +34,15 @@ class Article {
 		this.votes = votes || 0;
 	}
 
+	domain(): string{
+		try{
+			const link: string = this.link.split("//")[1];
+			return link.split('/')[0];
+		}catch(err){
+			return null;
+		}
+	}
+
 	voteUp(): void{
 		this.votes +=1;
 	}
@@ -65,6 +74,7 @@ class Article {
 		<a class = "ui large header" href = "{{ article.link }}">
 			{{article.title}}
 		</a>
+		<div class = "meta">({{ article.domain() }})</div>
 		<ul class = "ui big horizontal list voters">
 			<li class = "item">
 				<a href (click) = "voteUp()">
@@ -86,9 +96,10 @@ class Article {
  class ArticleComponent  {
 	article: Article;
 
-	constructor() {
+	/*constructor() {
 		this.article = new Article("Angular 2", "http://angular.io", 10);
-	}
+	}*/
+
 
 	voteUp(): boolean{
 		this.article.voteUp();
@@ -124,7 +135,7 @@ class Article {
 		</form>
 		<div class = "ui grid posts">
 			<reddit-article 
-			*ngFor="let article of articles"
+			*ngFor="let article of sortedArticle()"
 			[article] = "article">
 			</reddit-article>
 		</div>
@@ -150,6 +161,10 @@ class RedditApp {
 
 		title.value = '';
 		link.value = '';
+	}
+
+	sortedArticle(): Article[]{
+		return this.articles.sort((a: Article, b: Article)=> a.votes - b.votes);
 	}
 }
 
