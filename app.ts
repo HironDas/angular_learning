@@ -145,6 +145,11 @@ class RedditApp {
 
 	addArticle(title: HTMLInputElement, link: HTMLInputElement): void {
 		console.log(`Adding article title: ${title.value} and Link: ${link.value}`);
+
+		this.articles.push(new Article(title.value, link.value, 0));
+
+		title.value = '';
+		link.value = '';
 	}
 }
 
