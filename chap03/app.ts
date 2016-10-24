@@ -13,7 +13,6 @@ class Product{
 	}
 }
 
-
 @Component({
 	selector: 'product-image',
 	host: {'class': 'ui small image'},
@@ -53,7 +52,6 @@ class ProductDepartment{
 })
 class PriceDisplay {
 	price: number;
-	constructor() {}
 }
 
 
@@ -71,8 +69,7 @@ class PriceDisplay {
 				<div class='product-sku'>SKU #{{ product.sku }}</div> 
 			</div>
 			<div class = 'description'>
-				<product-department [product]="product">
-				</product-department>
+      			<product-department [product]="product"></product-department>
 			</div>
 		</div>
 		<price-display [price]='product.price'></price-display>
@@ -81,7 +78,6 @@ class PriceDisplay {
 class ProductRow {
 	product: Product;
 
-	constructor() {}
 }
 
 @Component({
@@ -139,10 +135,10 @@ class ProductList{
 })
 
 class InventoryApp{
-	product: Product[];
+	products: Product[];
 
 	constructor(){
-		this.product = [
+		this.products = [
 		new Product(
 			'NICEHAT', 'A Nice Black Hat',
 			'/resources/images/products/black-hat.jpg',
@@ -160,8 +156,8 @@ class InventoryApp{
 	}
 
 	productWasSelected(product: Product): void {
-		console.log('Product Clicked: ', procuct);
-	}
+    	console.log('Product clicked: ', product);
+  	}
 }
 
 bootstrap(InventoryApp);
