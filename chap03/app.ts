@@ -34,7 +34,7 @@ class ProductImage {
 		<div class="product-department">
 			<span *ngFor = "let name of product.department; let i = index">
 				<a href="#">{{ name }}</a>
-				<span>{{ i < (product.department.length - 1)? ">" : ""}}</span>
+				<span>{{ i < (product.department.length-1) ? ">" : ""}}</span>
 			</span>
 		</div>
 	`
@@ -61,7 +61,7 @@ class PriceDisplay {
 @Component({
 	selector: 'product-row',
 	inputs: ['product'],
-	host: {'class': 'item'},
+	host: {class: 'item'},
 	directives: [ProductImage, ProductDepartment, PriceDisplay],
 	template: `
 		<product-image [product] = 'product'></product-image>
@@ -130,7 +130,8 @@ class ProductList{
 	directives: [ProductList],
 	template: `
 		<div class='inventory-app'>
-			<product-list [productList] = 'products'
+			<product-list 
+			[productList] = 'products'
 			(onProductSelected)="productWasSelected($event)">
 			</product-list>
 		</div>
