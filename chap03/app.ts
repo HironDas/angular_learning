@@ -15,10 +15,72 @@ class Product{
 
 
 @Component({
+	selector: 'product-image',
+	host: {'class': 'ui small image'},
+	inputs: ['product'],
+	template: `
+		<img class = 'product-image' [src] = "product.imageUrl">
+	`
+})
+class ProductImage {
+	product: Product;
+	constructor() {}
+}
+
+@Component({
+	selector: 'product-department',
+	inputs: ['product'],
+	template: `
+		<div class="product-department">
+			<span *ngFor = "let name of product.department; let i = index">
+				<a href="#">{{ name }}</a>
+				<span>{{ i < (product.department.length - 1)? ">" : ""}}</span>
+			</span>
+		</div>
+	`
+})
+
+class ProductDepartment{
+	product: Product;
+}
+
+@Component({
+	selector: 'price-display',
+	inputs: ['price'],
+	template: `
+		<div class = 'price-display'>\${{price}}</div>
+	`
+})
+class PriceDisplay {
+	price: number;
+	constructor() {}
+}
+
+
+
+@Component({
 	selector: 'product-row',
-	template: ''
+	inputs: ['product'],
+	host: {'class': 'item'},
+	directives: [ProductImage, ProductDepartment, PriceDisplay],
+	template: `
+		<product-image [product] = 'product'></product-image>
+		<div class = 'content'>
+			<div class = 'header'> {{ product.name }}</div>
+			<div class = "meta">
+				<div class='product-sku'>SKU #{{ product.sku }}</div> 
+			</div>
+			<div class = 'description'>
+				<product-department [product]="product">
+				</product-department>
+			</div>
+		</div>
+		<price-display [price]='product.price'></price-display>
+	`
 })
 class ProductRow {
+	product: Product;
+
 	constructor() {}
 }
 
