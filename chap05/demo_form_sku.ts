@@ -23,3 +23,6 @@ import {FORM_DIRECTIVES} from "@angular/common";
 	</div>
 	`
 })
+class DemoFormSku{
+ 	
+}
