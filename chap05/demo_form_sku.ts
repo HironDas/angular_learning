@@ -23,6 +23,8 @@ import {FORM_DIRECTIVES} from "@angular/common";
 	</div>
 	`
 })
-class DemoFormSku{
- 	
+export class DemoFormSku{
+ 	onSubmin(form: any):void{
+ 		console.log('your submited value', form);
+ 	}
 }
